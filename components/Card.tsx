@@ -116,10 +116,10 @@ const Card = ({ data }: Props) => {
 					</p>
 					<div>
 						<div className="flex justify-between">
-							<div>
+							<div className="flex">
 								<button
 									type="button"
-									className={`inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out rounded-full rounded-r-none ${
+									className={`inline-block max-sm:px-6 px-4 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out rounded-full rounded-r-none ${
 										reaction === LIKE &&
 										'bg-gray-600 hover:bg-gray-700 focus:bg-gray-700'
 									}`}
@@ -129,7 +129,7 @@ const Card = ({ data }: Props) => {
 								</button>
 								<button
 									type="button"
-									className={`inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase shadow-md hover:bg-red-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out rounded-full rounded-l-none ${
+									className={`inline-block max-sm:px-6 px-4 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase shadow-md hover:bg-red-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out rounded-full rounded-l-none ${
 										reaction === DISLIKE &&
 										'bg-gray-600 hover:bg-gray-700 focus:bg-gray-700'
 									}`}
