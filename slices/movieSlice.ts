@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
 import { Movie, movies$ } from '@/movies'
 
-interface MovieState {
+export interface MovieState {
 	movies: Movie[]
 	loading: boolean
 	hasErrors: boolean
@@ -36,10 +36,26 @@ export const moviesSlice = createSlice({
 				return movie
 			})
 		},
+		unlike: (state, action: PayloadAction<string>) => {
+			state.movies = state.movies.map(movie => {
+				if (movie.id === action.payload) {
+					movie.likes = movie.likes - 1
+				}
+				return movie
+			})
+		},
 		dislike: (state, action: PayloadAction<string>) => {
 			state.movies = state.movies.map(movie => {
 				if (movie.id === action.payload) {
 					movie.dislikes = movie.dislikes + 1
+				}
+				return movie
+			})
+		},
+		undislike: (state, action: PayloadAction<string>) => {
+			state.movies = state.movies.map(movie => {
+				if (movie.id === action.payload) {
+					movie.dislikes = movie.dislikes - 1
 				}
 				return movie
 			})
@@ -63,6 +79,7 @@ export const moviesSlice = createSlice({
 	},
 })
 
-export const { deleteMovie, like, dislike } = moviesSlice.actions
+export const { deleteMovie, like, dislike, unlike, undislike } =
+	moviesSlice.actions
 export const selectMovies = (state: RootState) => state.movies
 export default moviesSlice.reducer

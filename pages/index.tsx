@@ -1,26 +1,22 @@
 import { useEffect, Key } from 'react'
 
 import Head from 'next/head'
+import Card from '@/components/Card'
 import styles from '@/styles/Home.module.css'
 
 import { useSelector, useDispatch } from 'react-redux'
-import {
-	fetchMovies,
-	deleteMovie,
-	selectMovies,
-	like,
-	dislike,
-} from '@/slices/movieSlice'
+import { fetchMovies, selectMovies } from '@/slices/movieSlice'
 import { AppDispatch } from '@/store'
 
 export default function Home() {
-	const { movies } = useSelector(selectMovies)
+	const { movies, loading } = useSelector(selectMovies)
 	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
 		dispatch(fetchMovies())
-		console.log('rerendered')
 	}, [dispatch])
+
+	if (loading) return <h1>Loading...</h1>
 
 	return (
 		<>
@@ -38,23 +34,12 @@ export default function Home() {
 			</Head>
 			<main className={styles.main}>
 				<h1>Movies:</h1>
-				<ul>
+
+				<div className="flex flex-wrap justify-evenly items-stretch gap-x-4 gap-y-16">
 					{movies.map((movie, index) => (
-						<li key={index}>
-							<p onClick={() => dispatch(deleteMovie(movie.id))}>
-								{JSON.stringify(movie)}
-							</p>{' '}
-							<span onClick={() => dispatch(like(movie.id))}>
-								{' '}
-								+{' '}
-							</span>{' '}
-							<span onClick={() => dispatch(dislike(movie.id))}>
-								{' '}
-								-{' '}
-							</span>
-						</li>
+						<Card data={movie} key={index} />
 					))}
-				</ul>
+				</div>
 			</main>
 		</>
 	)
