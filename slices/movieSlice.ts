@@ -8,6 +8,7 @@ export interface MovieState {
 	loading: boolean
 	hasErrors: boolean
 	error: string
+	filter: string[]
 }
 
 const initialState: MovieState = {
@@ -15,6 +16,7 @@ const initialState: MovieState = {
 	loading: false,
 	hasErrors: false,
 	error: '',
+	filter: [],
 }
 
 export const fetchMovies = createAsyncThunk('movies/fetchMovies', () => movies$)
@@ -23,6 +25,9 @@ export const moviesSlice = createSlice({
 	name: 'movies',
 	initialState,
 	reducers: {
+		setFilter: (state, action: PayloadAction<string[]>) => {
+			state.filter = action.payload
+		},
 		deleteMovie: (state, action: PayloadAction<string>) => {
 			state.movies = state.movies.filter(
 				movie => movie.id !== action.payload
@@ -79,7 +84,7 @@ export const moviesSlice = createSlice({
 	},
 })
 
-export const { deleteMovie, like, dislike, unlike, undislike } =
+export const { deleteMovie, like, dislike, unlike, undislike, setFilter } =
 	moviesSlice.actions
 export const selectMovies = (state: RootState) => state.movies
 export default moviesSlice.reducer

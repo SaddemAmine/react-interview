@@ -10,7 +10,7 @@ import { AppDispatch } from '@/store'
 import Navbar from '@/components/Navbar'
 
 export default function Home() {
-	const { movies, loading } = useSelector(selectMovies)
+	const { movies, loading, filter } = useSelector(selectMovies)
 	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
@@ -37,9 +37,15 @@ export default function Home() {
 			<Navbar />
 			<main className={styles.main + ' pt-36 max-sm:pt-64'}>
 				<div className="flex flex-wrap justify-evenly items-stretch gap-x-4 gap-y-16 w-full">
-					{movies.map((movie, index) => (
-						<Card data={movie} key={index} />
-					))}
+					{movies
+						.filter(
+							movie =>
+								filter.includes(movie.category) ||
+								filter.length === 0
+						)
+						.map((movie, index) => (
+							<Card data={movie} key={index} />
+						))}
 				</div>
 			</main>
 		</>

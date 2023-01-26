@@ -1,16 +1,17 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setFilter } from '@/slices/movieSlice'
 import Select from 'react-select'
 
 const Navbar = () => {
-	const [selectedOption, setSelectedOption] = useState()
-
 	const options = [
 		{ value: 'Comedy', label: 'Comedy' },
 		{ value: 'Drama', label: 'Drama' },
 		{ value: 'Thriller', label: 'Thriller' },
 		{ value: 'Animation', label: 'Animation' },
 	]
+
+	const dispatch = useDispatch()
 
 	return (
 		<nav className="min-h-min px-12 md:px-24 fixed w-full">
@@ -33,7 +34,10 @@ const Navbar = () => {
 				<Select
 					options={options}
 					isMulti
-					onChange={options => console.log(options)}
+					onChange={options => {
+						const categories = options.map(option => option.value)
+						dispatch(setFilter(categories))
+					}}
 					placeholder="Genres..."
 				/>
 			</section>
