@@ -61,8 +61,7 @@ const Card = ({ data }: Props) => {
 					className="rounded-t-lg h-80 w-full bg-center bg-cover bg-no-repeat"
 					style={{
 						backgroundImage: `url(${
-							// data?.image || 'https://picsum.photos/1382/2048'
-							'https://picsum.photos/1382/2048'
+							data?.image || 'https://picsum.photos/1382/2048'
 						})`,
 					}}
 				></div>
