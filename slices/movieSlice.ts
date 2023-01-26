@@ -87,4 +87,8 @@ export const moviesSlice = createSlice({
 export const { deleteMovie, like, dislike, unlike, undislike, setFilter } =
 	moviesSlice.actions
 export const selectMovies = (state: RootState) => state.movies
+export const selectCategories = (state: RootState) =>
+	Array.from(
+		new Set<string>(state.movies.movies.map(movie => movie.category))
+	)
 export default moviesSlice.reducer

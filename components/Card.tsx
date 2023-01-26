@@ -2,13 +2,14 @@ import { Movie } from '@/movies'
 import { useState } from 'react'
 import RatioBar from './RatioBar'
 import classNames from 'classnames'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
 	deleteMovie,
 	like,
 	dislike,
 	unlike,
 	undislike,
+	selectCategories,
 } from '@/slices/movieSlice'
 import {
 	TrashIcon,
@@ -20,21 +21,6 @@ interface Props {
 	data: Movie
 }
 
-const generateColor = (category: string) => {
-	switch (category) {
-		case 'Thriller':
-			return 'red'
-		case 'Comedy':
-			return 'yellow'
-		case 'Drame':
-			return 'orange'
-		case 'Animation':
-			return 'indigo'
-		default:
-			return 'gray'
-	}
-}
-
 const LIKE = 'like'
 const DISLIKE = 'dislike'
 const NEUTRAL = 'neutral'
@@ -42,6 +28,7 @@ const NEUTRAL = 'neutral'
 const Card = ({ data }: Props) => {
 	const [reaction, setReaction] = useState('neutral')
 	const dispatch = useDispatch()
+	const categories = useSelector(selectCategories)
 
 	const handleReaction = (input: string) => {
 		if (reaction === NEUTRAL) {
@@ -104,6 +91,10 @@ const Card = ({ data }: Props) => {
 								{
 									'bg-red-100  text-red-800  dark:bg-red-900 dark:text-red-300':
 										data?.category === 'Thriller',
+								},
+								{
+									'bg-gray-100  text-gray-800  dark:bg-gray-900 dark:text-gray-300':
+										!categories.includes(data?.category),
 								}
 							)}
 						>

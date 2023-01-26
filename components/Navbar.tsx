@@ -1,15 +1,13 @@
 import Image from 'next/image'
-import { useDispatch } from 'react-redux'
-import { setFilter } from '@/slices/movieSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFilter, selectCategories } from '@/slices/movieSlice'
 import Select from 'react-select'
 
 const Navbar = () => {
-	const options = [
-		{ value: 'Comedy', label: 'Comedy' },
-		{ value: 'Drama', label: 'Drama' },
-		{ value: 'Thriller', label: 'Thriller' },
-		{ value: 'Animation', label: 'Animation' },
-	]
+	const options = useSelector(selectCategories).map(category => ({
+		value: category,
+		label: category,
+	}))
 
 	const dispatch = useDispatch()
 
