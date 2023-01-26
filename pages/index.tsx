@@ -1,4 +1,4 @@
-import { useEffect, Key } from 'react'
+import { useState, useEffect, Key } from 'react'
 
 import Head from 'next/head'
 import Card from '@/components/Card'
@@ -9,9 +9,26 @@ import { fetchMovies, selectMovies } from '@/slices/movieSlice'
 import { AppDispatch } from '@/store'
 import Navbar from '@/components/Navbar'
 
+import ReactPaginate from 'react-paginate'
+import Select from 'react-select'
+
+import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
+
 export default function Home() {
 	const { movies, loading, filter } = useSelector(selectMovies)
 	const dispatch = useDispatch<AppDispatch>()
+
+	const [movieOffset, setmovieOffset] = useState(0)
+	const [moviesPerPage, setmoviesPerPage] = useState(movies.length || 10)
+
+	const endOffset = movieOffset + moviesPerPage
+	const currentmovies = movies.slice(movieOffset, endOffset)
+	const pageCount = Math.ceil(movies.length / moviesPerPage)
+
+	const handlePageClick = (event: any) => {
+		const newOffset = (event.selected * moviesPerPage) % movies.length
+		setmovieOffset(newOffset)
+	}
 
 	useEffect(() => {
 		dispatch(fetchMovies())
@@ -35,8 +52,41 @@ export default function Home() {
 
 			<Navbar />
 			<main className={styles.main + ' pt-36 max-sm:pt-64'}>
-				<div className="flex flex-wrap justify-evenly items-stretch gap-x-4 gap-y-16 w-full">
-					{movies
+				<div className="flex mb-8 w-full justify-start gap-x-4 items-center">
+					<ReactPaginate
+						breakLabel="..."
+						onPageChange={handlePageClick}
+						pageRangeDisplayed={5}
+						pageCount={pageCount}
+						previousLabel={
+							<button className="bg-orange-500 text-white p-2.5 rounded-full">
+								<ArrowLeftIcon className="h-6 text-white-500" />
+							</button>
+						}
+						nextLabel={
+							<button className="bg-orange-500 text-white p-2.5 rounded-full">
+								<ArrowRightIcon className="h-6 text-white-500" />
+							</button>
+						}
+						renderOnZeroPageCount={() => null}
+						containerClassName="flex justify-center gap-x-2"
+						pageClassName="hidden"
+					/>
+					<Select
+						options={[4, 8, 12].map(value => ({
+							value,
+							label: value + ' / page',
+						}))}
+						menuPosition="fixed"
+						onChange={option =>
+							setmoviesPerPage(option!.value ?? moviesPerPage)
+						}
+						placeholder="Movies per page"
+					/>
+				</div>
+
+				<div className="flex flex-wrap justify-evenly movies-stretch gap-x-4 gap-y-16 w-full">
+					{currentmovies
 						.filter(
 							movie =>
 								filter.includes(movie.category) ||

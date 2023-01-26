@@ -12,7 +12,7 @@ const Navbar = () => {
 	const dispatch = useDispatch()
 
 	return (
-		<nav className="min-h-min px-12 md:px-24 fixed w-full">
+		<nav className="min-h-min px-12 md:px-24 fixed w-full z-10">
 			<section className="bg-orange-500 w-full h-full px-12 py-6 flex justify-between items-center rounded-b-lg max-sm:flex-wrap max-sm:justify-center max-sm:gap-y-5">
 				<Image
 					src="/partikeep.svg"

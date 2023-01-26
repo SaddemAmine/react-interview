@@ -20,21 +20,6 @@ interface Props {
 	data: Movie
 }
 
-const generateColor = (category: string) => {
-	switch (category) {
-		case 'Thriller':
-			return 'red'
-		case 'Comedy':
-			return 'yellow'
-		case 'Drame':
-			return 'orange'
-		case 'Animation':
-			return 'indigo'
-		default:
-			return 'gray'
-	}
-}
-
 const LIKE = 'like'
 const DISLIKE = 'dislike'
 const NEUTRAL = 'neutral'
