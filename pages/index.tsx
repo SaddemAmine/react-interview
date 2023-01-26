@@ -51,7 +51,11 @@ export default function Home() {
 			</Head>
 
 			<Navbar />
-			<main className={styles.main + ' pt-36 max-sm:pt-64'}>
+			<main
+				className={
+					styles.main + ' pt-36 px-24 max-sm:pt-64 max-sm:px-4'
+				}
+			>
 				<div className="flex mb-8 w-full justify-start gap-x-4 items-center">
 					<ReactPaginate
 						breakLabel="..."
